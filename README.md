@@ -58,7 +58,7 @@ forward, done).
 
 ## Installation
 
-    cordova plugin add cordova-plugin-inappbrowser
+    cordova plugin add https://github.com/KalenderDigital/cordova-plugin-inappbrowser
 
 If you want all page loads in your app to go through the InAppBrowser, you can
 simply hook `window.open` during initialization.  For example:

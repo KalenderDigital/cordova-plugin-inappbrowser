@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-inappbrowser",
-  "version": "6.1.0-dev",
+  "version": "6.1.0",
   "description": "Cordova InAppBrowser Plugin",
   "types": "./types/index.d.ts",
   "cordova": {
@@ -11,8 +11,8 @@
       "ios"
     ]
   },
-  "repository": "github:apache/cordova-plugin-inappbrowser",
-  "bugs": "https://github.com/apache/cordova-plugin-inappbrowser/issues",
+  "repository": "github:KalenderDigital/cordova-plugin-inappbrowser",
+  "bugs": "https://github.com/KalenderDigital/cordova-plugin-inappbrowser/issues",
   "keywords": [
     "cordova",
     "in",
