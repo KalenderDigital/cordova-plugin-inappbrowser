@@ -753,7 +753,7 @@ BOOL isExiting = FALSE;
       self.toolbar.translucent = NO;
     }
 
-    self.toolbar.backgroundColor = _browserOptions.toolbarcolor ? [self colorFromHexString:_browserOptions.toolbarcolor] : [UIColor blackColor];
+    self.toolbar.backgroundColor = _browserOptions.toolbarcolor ? [self colorFromHexString:_browserOptions.toolbarcolor] : [UIColor whiteColor];
 
     [self.view addSubview:self.toolbar];
     // We add our own constraints, they should not be determined from the frame
