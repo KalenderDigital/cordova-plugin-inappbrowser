@@ -752,6 +752,9 @@ BOOL isExiting = FALSE;
     if (!_browserOptions.toolbartranslucent) { // Set toolbar translucent to no if user sets it in options
       self.toolbar.translucent = NO;
     }
+
+    self.toolbar.backgroundColor = _browserOptions.toolbarcolor ? [self colorFromHexString:_browserOptions.toolbarcolor] : [UIColor blackColor];
+
     [self.view addSubview:self.toolbar];
     // We add our own constraints, they should not be determined from the frame
     self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
