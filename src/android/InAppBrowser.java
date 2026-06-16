@@ -1093,13 +1093,12 @@ public class InAppBrowser extends CordovaPlugin {
 
                     ViewCompat.setOnApplyWindowInsetsListener(main, (v, windowInsets) -> {
                         Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-                        // Nur oben Padding setzen damit die Toolbar nicht hinter der Status Bar liegt.
-                        // Links/Rechts/Unten wird über die Toolbar und WebView selbst gehandelt.
-                        toolbar.setPadding(
+                        int topInset = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars()).top;
+                        v.setPadding(
                             insets.left,
-                            insets.top,
+                            topInset,
                             insets.right,
-                            0
+                            insets.bottom
                         );
                         return WindowInsetsCompat.CONSUMED;
                     });
