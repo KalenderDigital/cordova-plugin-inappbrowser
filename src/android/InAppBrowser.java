@@ -796,9 +796,14 @@ public class InAppBrowser extends CordovaPlugin {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 if (fullscreen) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        dialog.getWindow().getInsetsController().hide(
-                            android.view.WindowInsets.Type.statusBars()
-                        );
+                        // Erst nach show() aufrufen, wenn DecorView bereits attached ist
+                        dialog.getWindow().getDecorView().post(() -> {
+                            if (dialog.getWindow().getInsetsController() != null) {
+                                dialog.getWindow().getInsetsController().hide(
+                                    android.view.WindowInsets.Type.statusBars()
+                                );
+                            }
+                        });
                     } else {
                         dialog.getWindow().setFlags(
                             WindowManager.LayoutParams.FLAG_FULLSCREEN,
