@@ -35,6 +35,9 @@ import android.net.http.SslError;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.graphics.Insets;
 import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -792,7 +795,16 @@ public class InAppBrowser extends CordovaPlugin {
                 dialog.getWindow().getAttributes().windowAnimations = android.R.style.Animation_Dialog;
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 if (fullscreen) {
-                    dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        dialog.getWindow().getInsetsController().hide(
+                            android.view.WindowInsets.Type.statusBars()
+                        );
+                    } else {
+                        dialog.getWindow().setFlags(
+                            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                            WindowManager.LayoutParams.FLAG_FULLSCREEN
+                        );
+                    }
                 }
                 dialog.setCancelable(true);
                 dialog.setInAppBroswer(getInAppBrowser());
@@ -1064,6 +1076,26 @@ public class InAppBrowser extends CordovaPlugin {
                     dialog.setContentView(main);
                     dialog.show();
                     dialog.getWindow().setAttributes(lp);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                        dialog.getWindow().setStatusBarColor(toolbarColor);
+                    }
+
+                    if (Build.VERSION.SDK_INT >= 35) {
+                        dialog.getWindow().setDecorFitsSystemWindows(false);
+                    }
+
+                    ViewCompat.setOnApplyWindowInsetsListener(main, (v, windowInsets) -> {
+                        Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+                        v.setPadding(
+                            insets.left,
+                            insets.top,
+                            insets.right,
+                            insets.bottom
+                        );
+                        return WindowInsetsCompat.CONSUMED;
+                    });
                 }
                 // the goal of openhidden is to load the url and not display it
                 // Show() needs to be called to cause the URL to be loaded
